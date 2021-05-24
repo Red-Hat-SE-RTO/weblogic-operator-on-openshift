@@ -278,6 +278,49 @@ oc apply -f sample-domain.yaml
 
 ### Step 19
 
+Monitor the pods as they start up, ensuring that the `domain1-admin-server`, `domain1-managed-server-1`, and `domain1-managed-server-2` are all "Running" and "Ready (1/1)". To do so, run the following command:
+
+```
+oc get pods -n sample-domain1 -w
+```
+
+The output will look similar to:
+
+```
+NAME                         READY   STATUS              RESTARTS   AGE
+domain1-introspector-77nls   0/1     ContainerCreating   0          2s
+domain1-introspector-77nls   0/1     ContainerCreating   0          3s
+domain1-introspector-77nls   1/1     Running             0          4s
+domain1-introspector-77nls   0/1     Completed           0          21s
+domain1-introspector-77nls   0/1     Terminating         0          21s
+domain1-introspector-77nls   0/1     Terminating         0          21s
+domain1-admin-server         0/1     Pending             0          0s
+domain1-admin-server         0/1     Pending             0          0s
+domain1-admin-server         0/1     Pending             0          0s
+domain1-admin-server         0/1     ContainerCreating   0          0s
+domain1-admin-server         0/1     ContainerCreating   0          2s
+domain1-admin-server         0/1     Running             0          4s
+domain1-admin-server         1/1     Running             0          34s
+domain1-managed-server-1     0/1     Pending             0          0s
+domain1-managed-server-1     0/1     Pending             0          0s
+domain1-managed-server-1     0/1     ContainerCreating   0          0s
+domain1-managed-server-1     0/1     ContainerCreating   0          0s
+domain1-managed-server-2     0/1     Pending             0          0s
+domain1-managed-server-2     0/1     Pending             0          1s
+domain1-managed-server-2     0/1     ContainerCreating   0          1s
+domain1-managed-server-2     0/1     ContainerCreating   0          1s
+domain1-managed-server-1     0/1     ContainerCreating   0          2s
+domain1-managed-server-2     0/1     ContainerCreating   0          3s
+domain1-managed-server-1     0/1     Running             0          4s
+domain1-managed-server-2     0/1     Running             0          5s
+domain1-managed-server-1     1/1     Running             0          35s
+domain1-managed-server-2     1/1     Running             0          42s
+```
+
+Once you see the three containers in "Running" and "Ready (1/1)" status, you can Control+c out of the command.
+
+### Step 20
+
 We now need to expose both the admin server and the application frontend, using OpenShift's built-in ingress controller. This will enable us to access the admin console, use tooling like WLST, and access our newly deployed WebLogic application. To expose the operator-created services, by running the following command:
 
 ```
@@ -285,7 +328,7 @@ oc expose service domain1-admin-server-ext --port=default
 oc expose service domain1-cluster-cluster-1 --port=default
 ```
 
-### Step 20
+### Step 21
 
 You are now ready to access the admin console or the application in your web browser. 
 

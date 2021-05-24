@@ -24,7 +24,7 @@ spec:
   domainHomeSourceType: Image
 
   # Update this with the name of the image that will be used to run your domain:
-  image: "image-registry.openshift-image-registry.svc:5000/sample-domain1/my-domain1-image:1.2"
+  image: "image-registry.openshift-image-registry.svc:5000/sample-domain1/my-domain1-image:1.0"
 
   # imagePullPolicy defaults to "Always" if image version is :latest
   imagePullPolicy: "IfNotPresent"
